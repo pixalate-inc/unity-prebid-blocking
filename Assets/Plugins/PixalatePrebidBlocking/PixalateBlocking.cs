@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using UnityEngine;
 
 namespace Pixalate.Mobile {
@@ -262,21 +261,21 @@ namespace Pixalate.Mobile {
 		}
 
 		private static string buildUrl ( BlockingParameters parameters ) {
-			var query = HttpUtility.ParseQueryString( string.Empty );
+			var query = new List<string>();
 
 			if( parameters.ipv4 != null ) {
-				query.Add( "ip", parameters.ipv4 );
+				query.Add( $"ip={Uri.EscapeDataString(parameters.ipv4)}" );
 			}
 
 			if( parameters.userAgent != null ) {
-				query.Add( "userAgent", parameters.userAgent );
+				query.Add( $"userAgent={Uri.EscapeDataString(parameters.userAgent)}" );
 			}
 
 			if( parameters.deviceId != null ) {
-				query.Add( "deviceId", parameters.deviceId );
+				query.Add( $"deviceId={Uri.EscapeDataString(parameters.deviceId )}" );
 			}
 
-			return baseFraudURL + query.ToString();
+			return baseFraudURL + string.Join( "&", query );
 		}
 	}
 }
