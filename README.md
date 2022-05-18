@@ -149,7 +149,7 @@ When extending the DefaultBlockingStrategy, make sure to override the `-Impl` va
 
 ```cs
 // TestBlockingStrategy.cs
-static class TestBlockingStrategy : DefaultBlockingStrategy {
+public class TestBlockingStrategy : DefaultBlockingStrategy {
     public override void GetIPv4Impl (CancellationToken token, Action<string> callback) {
         callback.done( null );
     }
@@ -170,7 +170,7 @@ To create a custom strategy from scratch, you must extend the `BlockingStrategy`
 // CustomBlockingStrategy.cs
 
 // A contrived custom strategy only implementing the IPv4 parameter.
-static class CustomBlockingStrategy : BlockingStrategy {
+public class CustomBlockingStrategy : BlockingStrategy {
     public async void GetIPv4 (CancellationToken token, Action<string> callback) {
         // The strategy implementations are executed in a background thread, so it is OK 
         // to use blocking operations such as HttpsURLConnection.
